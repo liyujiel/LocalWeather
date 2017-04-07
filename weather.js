@@ -2,7 +2,6 @@ $(document).ready(function(){
     getLocation();
     function getLocation() {
         $.get("http://ipinfo.io",function(location){
-            console.log(location);
             $('.location')
               .append(location.city + ",")
               .append(location.region);
@@ -18,27 +17,25 @@ $(document).ready(function(){
 
         var weatherApiURL ='http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + "&units=" + units + '&appid=e2db5b0453a25a492e87ad8b03046a7c';
 
-        console.log(weatherApiURL);
 
         $.get(weatherApiURL,function(weather){
             var temperature = weather.main.temp;
             var unitLabel;
 
-            if(units === "imperial"){
-                unitLabel = "F";
+            if(units === "metric"){
+                unitLabel = "C";
             }
             else{
-                unitLabel = "C";
+                unitLabel = "F";
             }
 
             temperature = parseFloat((temperature).toFixed(1));
-            console.log(weather);
 
             $("#icon").append("<img src='http://openweathermap.org/img/w/" + weather.weather[0].icon + ".png'>");
 
-            $('temp').append(temperature + " " + unitLabel);
+            $('#temp').append(temperature + " " + unitLabel);
 
-            $('conditions').append(weather.weather[0].discription);
+            $('#conditions').append(weather.weather[0].discription);
         }, "jsonp");
     };
 
@@ -51,5 +48,6 @@ $(document).ready(function(){
         else{
             var units = "imperial";
         }
+        return units;
     }
 });
